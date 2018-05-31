@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title>Feedback</title>
+</head>
+<body>
+<form name="feedback" method="post" onsubmit="return formCheck()" action="Form.php">
+    <div>
+        <p>Name: </p>
+        <input type="text" name="name"> 
+        <p>E-mail: </p>
+        <input type="text" name="email">
+        <p>Phone: </p>
+        <input type="tel" name="phone">
+        <p>Commnet: </p>
+        <textarea name="comment" rows="15"></textarea>
+        <p>File: </p>
+        <input type="file" name="file">
+        <br/>
+        <input type="submit" name="buttonSend" value="Send">
+        <b>PHP</b><input type="checkbox" name="jsOff">
+    </div>
+	
+<script language="JavaScript">
+    function isEmpty(data) {
+        if (data.length == 0) {
+            return true
+        }
+        else {
+            return false;
+        }
+    }
+    function checkMail(mail) {
+        return /^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i.test(mail);
+    }
+    function checkTel(tel) {
+        return /^[\d]{6,11}$/.test(tel);// длина номера 6-11 цифр
+    }
+    function formCheck() {
+        if (document.feedback.jsOff.checked) {
+            return true;
+        }
+        var form = document.feedback;
+        var name = form.name.value;
+        var email = form.email.value;
+        var tel = form.phone.value;
+        var comment = form.comment.value;
+        var file = form.file.value;
+        var errorList = "";
+        if (isEmpty(name)) {
+            errorList += "Name \n";
+        }
+        if (isEmpty(email)) {
+            errorList += "E-mail \n";
+        } else {
+            if (!checkMail(email)) {
+                errorList += "E-mail - incorrect \n"
+            }
+        }
+        if (isEmpty(tel)) {
+            errorList += "Number \n";
+        } else {
+            if (!checkTel(tel)) {
+                errorList += "Number - incorrect \n"
+            }
+        }
+        if (isEmpty(comment)) {
+            errorList += "Comment is empty \n";
+        }
+        if (isEmpty(file)) {
+            errorList += "Add file \n";
+        }
+        if (errorList == "") {
+            alert("JS: OK")
+            return true;
+        } else {
+            alert("JS: FAIL\n Add: \n" + errorList);
+            return false;
+        }
+    }
+</script>
+</form>
+</body>
+</html>
